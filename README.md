@@ -1,2 +1,2 @@
 # mvdssm
-A Multi-View DSSM implementation with tensorflow estimator.
+A Multi-View DSSM for Recommendation System with tensorflow estimator.
