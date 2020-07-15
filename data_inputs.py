@@ -50,7 +50,7 @@ def train_input_fn(filenames=None,
                                                               sloppy=True))
     #dataset = dataset.shuffle(batch_size*10)
     dataset = dataset.map(parse_exp, num_parallel_calls=8)
-    dataset = dataset.batch(batch_size).prefetch(1)
+    dataset = dataset.batch(batch_size, drop_remainder=True).prefetch(1)
     return dataset
 
 def eval_input_fn(filenames=None,
@@ -60,7 +60,7 @@ def eval_input_fn(filenames=None,
     files = tf.data.Dataset.list_files(filenames)
     dataset = files.apply(tf.contrib.data.parallel_interleave(lambda filename: tf.data.TFRecordDataset(files), buffer_output_elements=batch_size*12, cycle_length=8))
     dataset = dataset.map(parse_exp, num_parallel_calls=4)
-    dataset = dataset.batch(batch_size)
+    dataset = dataset.batch(batch_size, drop_remainder=True)
     return dataset
 
 
